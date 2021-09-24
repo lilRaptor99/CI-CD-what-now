@@ -1,2 +1,2 @@
 # CI-CD-what-now
-Deploy static content to remote Nginx server on each push
+Trying to figureout how to deploy static content to remote nginx server on each push
