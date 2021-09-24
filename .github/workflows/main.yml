@@ -11,13 +11,20 @@ on:
 
 jobs:
   build:
-    name: Deploy on DigitalOcean Droplet
+    name: Deploy the content
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Echo workspace
-        run: echo $GITHUB_WORKSPACE
-      - name: Cat index.html
-        run: cat $GITHUB_WORKSPACE/index.html
+      # https://github.com/marketplace/actions/copy-via-ssh         
+      - name: Copy content recursively to remote
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: $GITHUB_WORKSPACE
+          remote: /var/www/html
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.PASSWORD }}
+          tryKeyboard: true
+          rmRemote: false
