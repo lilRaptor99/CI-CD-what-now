@@ -23,14 +23,19 @@ jobs:
           rm -r .git
           rm -r .github
           rm README.md
+      - name: Install sshpass
+        run: sudo apt install sshpass
+      # Zip content and send to the server and unzip in the server
+      - name: SSH files to the server
+        run: tar -c ./ | sshpass -p "${{ secrets.PASSWORD }}" ssh ${{ secrets.SSH_USER }}@${{ secrets.HOST }} "tar -xvf - -C /var/ghTest/html" 
       # https://github.com/marketplace/actions/copy-via-ssh         
-      - name: Copy content recursively to remote
-        uses: garygrossgarten/github-action-scp@release
-        with:
-          local: ./
-          remote: /var/www/html
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.PASSWORD }}
-          tryKeyboard: false
-          rmRemote: false
+#       - name: Copy content recursively to remote
+#         uses: garygrossgarten/github-action-scp@release
+#         with:
+#           local: ./
+#           remote: /var/www/html
+#           host: ${{ secrets.HOST }}
+#           username: ${{ secrets.SSH_USER }}
+#           password: ${{ secrets.PASSWORD }}
+#           tryKeyboard: false
+#           rmRemote: false
