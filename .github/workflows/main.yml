@@ -42,7 +42,7 @@ jobs:
           rmRemote: false
       - name: Unzip files in the server
         run: |
-          sshpass -p "${{ secrets.PASSWORD }}" ssh ${{ secrets.SSH_USER }}@${{ secrets.HOST }} 
+          sshpass -p "${{ secrets.PASSWORD }}" ssh -tt ${{ secrets.SSH_USER }}@${{ secrets.HOST }} 
           tar -xzvf /var/ghTest/zip/deploy.tar.gz -C /var/ghTest/html 
       # https://github.com/marketplace/actions/copy-via-ssh         
 #       - name: Copy content recursively to remote
