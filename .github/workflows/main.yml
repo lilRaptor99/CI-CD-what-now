@@ -17,6 +17,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout code
         uses: actions/checkout@v2
+      # Remove unnecessary files from deployment
+      - name: Remove unnecessary files
+        run: |
+          rm -r .git
+          rm -r .github
+          rm README.md
       # https://github.com/marketplace/actions/copy-via-ssh         
       - name: Copy content recursively to remote
         uses: garygrossgarten/github-action-scp@release
@@ -26,5 +32,5 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.PASSWORD }}
-          tryKeyboard: true
+          tryKeyboard: false
           rmRemote: false
