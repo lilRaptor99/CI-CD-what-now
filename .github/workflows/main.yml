@@ -27,13 +27,13 @@ jobs:
         run: sudo apt install sshpass
       # Zip content
       - name: Zip the directory
-        run: tar -czvf deploy.tar.gz ./
+        run: tar -czvf ../deploy.tar.gz ./
 #       - name: SSH files to the server
 #         run: tar -c ./ | sshpass -p "${{ secrets.PASSWORD }}" ssh ${{ secrets.SSH_USER }}@${{ secrets.HOST }} "tar -xvf - -C /var/ghTest/html" 
       - name: Copy content recursively to remote
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: ./deploy.tar.gz
+          local: ../deploy.tar.gz
           remote: /var/ghTest/zip/deploy.tar.gz
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
